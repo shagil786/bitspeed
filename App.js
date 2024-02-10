@@ -1,5 +1,5 @@
 const express = require("express");
-const { setupDatabase, pool } = require('./src/dbConfig');
+const { setupDatabase, pool } = require("./src/dbConfig");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -43,8 +43,8 @@ app.post("/identify", async (req, res) => {
       } else {
         if (intialResult.rows[0].linkprecedence == "primary") {
           const primaryContact = intialResult.rows.filter(
-            (each) => each.linkprecedence == "primary"
-            );
+            (each) => each.linkprecedence == "primary",
+          );
           if (primaryContact.length == 1) {
             const insertQuery = `
               INSERT INTO contacts (email, phoneNumber, linkedId, linkPrecedence)
@@ -70,7 +70,7 @@ app.post("/identify", async (req, res) => {
             email,
             phoneNumber,
             intialResult.rows[0].linkedid,
-            ];
+          ];
           await pool.query(insertQuery, insertValues);
         }
       }
@@ -90,7 +90,7 @@ app.post("/identify", async (req, res) => {
       }
     });
 
-      const contactsResponse = {
+    const contactsResponse = {
       contact: {
         primaryContatctId: primaryContactId,
         emails: [...emails],
@@ -106,7 +106,7 @@ app.post("/identify", async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
